@@ -1,5 +1,6 @@
 import { useState } from "react";
 import RichTextEditor, { RichTextEditorProps } from "./core";
+import { useMount, useUnmount } from "ahooks";
 
 const store: Record<string, React.Dispatch<React.SetStateAction<RichTextEditorProps>>
 > = {};
@@ -14,6 +15,13 @@ export function updateRichTextEditorContext(v: RichTextEditorProps) {
 
 export function RichTextEditorWithContext(v: RichTextEditorProps) {
     const [state, setState] = useState(v);
-    store[v.id] = setState;
+    useMount(() => {
+        store[v.id] = setState;
+    });
+    useUnmount(() => {
+        delete store[v.id];
+    });
+
+
     return <RichTextEditor {...state} />;
 }
