@@ -4,7 +4,7 @@ import { BlockNoteView } from "@blocknote/mantine";
 import "@blocknote/mantine/style.css";
 import { getDefaultReactSlashMenuItems, SuggestionMenuController, useCreateBlockNote } from "@blocknote/react";
 import { useMemo } from "react";
-import { zh } from "@blocknote/core/locales";
+import * as locales from "@blocknote/core/locales";
 import {
   getMultiColumnSlashMenuItems,
   multiColumnDropCursor,
@@ -20,6 +20,7 @@ export type RichTextEditorProps = {
   onBlocksChange?: (blocks: Block[]) => void;
   readOnly?: boolean;
   theme?: 'light' | 'dark';
+  locale: 'zh' | 'en';
 };
 
 
@@ -30,14 +31,15 @@ export default function RichTextEditor(props: RichTextEditorProps) {
     trigger: 'onBlocksChange'
   });
 
-
+  const locale = props.locale || 'zh';
+  const dictionary = {
+    ...locales[locale],
+    multi_column: multiColumnLocales[locale]
+  };
   // Creates a new editor instance.
   const editor = useCreateBlockNote({
     dropCursor: multiColumnDropCursor,
-    dictionary: {
-      ...zh,
-      multi_column: multiColumnLocales.zh
-    },
+    dictionary,
     initialContent: props.initialBlocks,
     schema: withMultiColumn(BlockNoteSchema.create()),
   });
