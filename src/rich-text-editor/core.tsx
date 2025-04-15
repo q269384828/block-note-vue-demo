@@ -42,6 +42,9 @@ export default function RichTextEditor(props: RichTextEditorProps) {
     dictionary,
     initialContent: props.initialBlocks,
     schema: withMultiColumn(BlockNoteSchema.create()),
+    tables: {
+      cellBackgroundColor: true
+    }
   });
 
   // Gets the default slash menu items merged with the multi-column ones.
