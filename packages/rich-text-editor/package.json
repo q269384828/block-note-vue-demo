@@ -1,0 +1,52 @@
+{
+  "name": "rich-text-editor",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "build": "tsc && vite build"
+  },
+  "files": [
+    "dist",
+    "types",
+    "src"
+  ],
+  "keywords": [],
+  "author": "",
+  "source": "src/index.ts",
+  "types": "./types/src/index.d.ts",
+  "module": "./dist/rich-text-editor.js",
+  "exports": {
+    ".": {
+      "types": "./types/src/index.d.ts",
+      "import": "./dist/rich-text-editor.js"
+    },
+    "./style.css": {
+      "import": "./dist/style.css"
+    }
+  },
+  "dependencies": {
+    "@blocknote/code-block": "^0.28.0",
+    "@blocknote/core": "^0.28.0",
+    "@blocknote/mantine": "^0.28.0",
+    "@blocknote/react": "^0.28.0",
+    "@blocknote/xl-multi-column": "^0.28.0",
+    "@vueuse/core": "^13.1.0",
+    "ahooks": "^3.8.4",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^4.12.0",
+    "@types/node": "^22.14.1",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "@vitejs/plugin-react": "^4.4.0",
+    "@vitejs/plugin-vue": "^5.2.3",
+    "typescript": "~5.7.3",
+    "vite": "^6.3.0"
+  },
+  "peerDependencies": {
+    "vue": "^3.2"
+  }
+}

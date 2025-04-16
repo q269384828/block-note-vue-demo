@@ -48,16 +48,15 @@ export default function RichTextEditor(props: RichTextEditorProps) {
       cellBackgroundColor: true
     },
     uploadFile: async (file: File) => {
-      return URL.createObjectURL(file)
+      return URL.createObjectURL(file);
     },
     codeBlock
   });
 
-  useUnmount(()=>{
+  useUnmount(() => {
     setBlocks(editor.document as Block[]);
-  })
+  });
 
-  // Gets the default slash menu items merged with the multi-column ones.
   const getSlashMenuItems = useMemo(() => {
     return async (query: string) =>
       filterSuggestionItems(
@@ -68,11 +67,10 @@ export default function RichTextEditor(props: RichTextEditorProps) {
         query
       );
   }, [editor]);
-  // Renders the editor instance and its document JSON.
 
   return <BlockNoteView
     theme={props.theme}
-    editable={!props.readOnly} // 根据 readOnly 状态设置编辑器是否可编辑
+    editable={!props.readOnly}
     lang="zh"
     editor={editor}
     onChange={() => {

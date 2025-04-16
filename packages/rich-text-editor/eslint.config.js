@@ -1,6 +1,6 @@
 import antfu from "@antfu/eslint-config";
 
 export default antfu({
-  ignores: ['packages/*/**'],
-  vue: true,
+  react: true,
+  ts: true,
 });

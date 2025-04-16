@@ -16,7 +16,7 @@
             可编辑
           </template>
         </Button>
-        <Button @click="()=>{
+        <Button @click="() => {
           locale = (locale === 'zh' ? 'en' : 'zh');
         }">
           locale:{{ locale }}
@@ -25,9 +25,10 @@
     </div>
     <div class="content">
       <div class="left">
-        <RichTextEditor :theme='theme' :locale="locale" :readOnly="readOnly === 'true'" :initialBlocks="blocks" @blocksChange="(v) => {
-          blocks = v;
-        }">
+        <RichTextEditor :theme='theme' :locale="locale" :readOnly="readOnly === 'true'" :initialBlocks="blocks"
+          @blocksChange="(v) => {
+            blocks = v;
+          }">
         </RichTextEditor>
       </div>
       <div class="right">
@@ -46,8 +47,7 @@
 
 <script setup lang="ts">
 import { shallowRef } from 'vue';
-import RichTextEditor from './rich-text-editor/vue-component';
-import { Block } from '@blocknote/core';
+import RichTextEditor, { type Block } from 'rich-text-editor';
 import { Button, Space } from '@arco-design/web-vue';
 import { initialContent } from './initialContent';
 import { useLocationQuery } from './useLocationQuery';

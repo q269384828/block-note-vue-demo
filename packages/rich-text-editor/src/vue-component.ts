@@ -1,9 +1,11 @@
+
+
 import { Block } from "@blocknote/core";
 import { createElement, StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { defineComponent, h, onMounted, type PropType, shallowRef, watch } from "vue";
+import { defineComponent, h, type PropType, shallowRef, watch, watchEffect } from "vue";
 import { RichTextEditorWithContext, updateRichTextEditorContext } from "./wrapper";
-import { locales } from "@blocknote/xl-multi-column";
+
 
 const RichTextEditorVueComponent = defineComponent({
     name: 'RichTextEditor',
@@ -22,12 +24,13 @@ const RichTextEditorVueComponent = defineComponent({
             type: String as PropType<'light' | 'dark'>,
             default: 'light'
         },
-        locale:{
+        locale: {
             type: String as PropType<'zh' | 'en'>,
             default: 'zh'
         }
     },
     setup(props) {
+
         const wrapperRef = shallowRef<HTMLDivElement>();
         const innerProps = shallowRef({
             id: `rich-text-editor-${Date.now()}-${Math.random()}`,
@@ -60,13 +63,19 @@ const RichTextEditorVueComponent = defineComponent({
             };
             updateRichTextEditorContext(innerProps.value);
         });
-        onMounted(() => {
-            createRoot(wrapperRef.value!).render(
-                createElement(StrictMode, null, createElement(RichTextEditorWithContext, innerProps.value)),
-            );
+        watchEffect(() => {
+            console.log(`wrapperRef.value`, wrapperRef.value);
+
+            if (wrapperRef.value) {
+                createRoot(wrapperRef.value!).render(
+                    createElement(StrictMode, null, createElement(RichTextEditorWithContext, innerProps.value)),
+                );
+            }
         });
 
-        return () => h('div', { ref: wrapperRef });
+        return () => {
+            return h('div', { ref: wrapperRef });
+        };
     }
 });
 
