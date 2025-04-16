@@ -9,18 +9,23 @@
           theme = (theme == 'dark' ? 'light' : 'dark');
         }">主题:{{ theme }}</Button>
         <Button type="text" @click="readOnly = (readOnly === 'true' ? 'false' : 'true')">
-          <template v-if="readOnly==='true'">
+          <template v-if="readOnly === 'true'">
             只读
           </template>
           <template v-else>
             可编辑
           </template>
         </Button>
+        <Button @click="()=>{
+          locale = (locale === 'zh' ? 'en' : 'zh');
+        }">
+          locale:{{ locale }}
+        </Button>
       </Space>
     </div>
     <div class="content">
       <div class="left">
-        <RichTextEditor :theme='theme' :readOnly="readOnly==='true'" :initialBlocks="blocks" @blocksChange="(v) => {
+        <RichTextEditor :theme='theme' :locale="locale" :readOnly="readOnly === 'true'" :initialBlocks="blocks" @blocksChange="(v) => {
           blocks = v;
         }">
         </RichTextEditor>
@@ -47,10 +52,10 @@ import { Button, Space } from '@arco-design/web-vue';
 import { initialContent } from './initialContent';
 import { useLocationQuery } from './useLocationQuery';
 
-
 const blocks = shallowRef<Block[]>(initialContent as Block[]);
-const theme = useLocationQuery('theme', 'light');
-const readOnly = useLocationQuery('readOnly', 'false');
+const theme = useLocationQuery<'light' | 'drak'>('theme', 'light');
+const readOnly = useLocationQuery<'false' | 'true'>('readOnly', 'false');
+const locale = useLocationQuery<'zh' | 'en'>('locale', 'zh');
 </script>
 <style>
 * {

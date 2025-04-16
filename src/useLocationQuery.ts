@@ -1,7 +1,7 @@
 import { computed, shallowRef } from "vue";
 
-export function useLocationQuery(name: string, defaultValue?: string) {
-    const temp = shallowRef<string | undefined>(getValue(name, defaultValue))
+export function useLocationQuery<T extends string>(name: string, defaultValue?: T) {
+    const temp = shallowRef<T | undefined>(getValue<T>(name, defaultValue))
     return computed({
         get() {
             return temp.value;
@@ -13,13 +13,13 @@ export function useLocationQuery(name: string, defaultValue?: string) {
     })
 }
 
-function getValue(name: string, defaultValue: string | undefined): string | undefined {
-    return new URLSearchParams(location.search).get(name) || defaultValue;
+function getValue<T extends string>(name: string, defaultValue: string | undefined): T | undefined {
+    return (new URLSearchParams(location.search).get(name) || defaultValue) as T;
 }
 
 
 
-function setValue(name: string, value: string | undefined): string | undefined {
+function setValue<T extends string>(name: string, value: T | undefined) {
     const searchParams = new URLSearchParams(location.search);
     if (value === undefined) {
         searchParams.delete(name);
@@ -27,5 +27,4 @@ function setValue(name: string, value: string | undefined): string | undefined {
         searchParams.set(name, value || '');
     }
     location.replace(`${location.pathname}?${searchParams.toString()}`);
-    return new URLSearchParams(location.search).get(name) || value;
 }

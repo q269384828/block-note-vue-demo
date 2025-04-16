@@ -3,6 +3,7 @@ import { createElement, StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { defineComponent, h, onMounted, type PropType, shallowRef, watch } from "vue";
 import { RichTextEditorWithContext, updateRichTextEditorContext } from "./wrapper";
+import { locales } from "@blocknote/xl-multi-column";
 
 const RichTextEditorVueComponent = defineComponent({
     name: 'RichTextEditor',
@@ -21,6 +22,10 @@ const RichTextEditorVueComponent = defineComponent({
             type: String as PropType<'light' | 'dark'>,
             default: 'light'
         },
+        locale:{
+            type: String as PropType<'zh' | 'en'>,
+            default: 'zh'
+        }
     },
     setup(props) {
         const wrapperRef = shallowRef<HTMLDivElement>();
@@ -29,6 +34,7 @@ const RichTextEditorVueComponent = defineComponent({
             initialBlocks: props.initialBlocks,
             readOnly: props.readOnly,
             theme: props.theme,
+            locale: props.locale,
             onBlocksChange: (blocks: Block[]) => {
                 props.onBlocksChange?.(blocks);
             }
@@ -37,6 +43,13 @@ const RichTextEditorVueComponent = defineComponent({
             innerProps.value = {
                 ...innerProps.value,
                 theme: props.theme
+            };
+            updateRichTextEditorContext(innerProps.value);
+        });
+        watch(() => props.locale, () => {
+            innerProps.value = {
+                ...innerProps.value,
+                locale: props.locale
             };
             updateRichTextEditorContext(innerProps.value);
         });
