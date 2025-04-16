@@ -1,39 +1,38 @@
-import { Block, BlockNoteSchema, combineByGroup, filterSuggestionItems } from "@blocknote/core";
-import { BlockNoteView } from "@blocknote/mantine";
-
-import { getDefaultReactSlashMenuItems, SuggestionMenuController, useCreateBlockNote } from "@blocknote/react";
-import { useMemo } from "react";
-import * as locales from "@blocknote/core/locales";
+import type { Block } from '@blocknote/core';
+import { codeBlock } from '@blocknote/code-block';
+import { BlockNoteSchema, combineByGroup, filterSuggestionItems } from '@blocknote/core';
+import * as locales from '@blocknote/core/locales';
+import { BlockNoteView } from '@blocknote/mantine';
+import { getDefaultReactSlashMenuItems, SuggestionMenuController, useCreateBlockNote } from '@blocknote/react';
 import {
   getMultiColumnSlashMenuItems,
   multiColumnDropCursor,
   locales as multiColumnLocales,
   withMultiColumn,
-} from "@blocknote/xl-multi-column";
-import { useControllableValue, useUnmount } from "ahooks";
-import { codeBlock } from "@blocknote/code-block";
+} from '@blocknote/xl-multi-column';
+import { useControllableValue, useUnmount } from 'ahooks';
+import { useMemo } from 'react';
 
-export type RichTextEditorProps = {
+export interface RichTextEditorProps {
   id: string;
   initialBlocks?: Block[];
   onBlocksChange?: (blocks: Block[]) => void;
   readOnly?: boolean;
   theme?: 'light' | 'dark';
   locale: 'zh' | 'en';
-};
-
+}
 
 export default function RichTextEditor(props: RichTextEditorProps) {
   // Stores the document JSON.
   const [, setBlocks] = useControllableValue<Block[]>(props, {
     defaultValue: props.initialBlocks,
-    trigger: 'onBlocksChange'
+    trigger: 'onBlocksChange',
   });
 
   const locale = props.locale || 'zh';
   const dictionary = {
     ...locales[locale],
-    multi_column: multiColumnLocales[locale]
+    multi_column: multiColumnLocales[locale],
   };
 
   // Creates a new editor instance.
@@ -43,12 +42,12 @@ export default function RichTextEditor(props: RichTextEditorProps) {
     initialContent: props.initialBlocks,
     schema: withMultiColumn(BlockNoteSchema.create()),
     tables: {
-      cellBackgroundColor: true
+      cellBackgroundColor: true,
     },
     uploadFile: async (file: File) => {
       return URL.createObjectURL(file);
     },
-    codeBlock
+    codeBlock,
   });
 
   useUnmount(() => {
@@ -60,27 +59,27 @@ export default function RichTextEditor(props: RichTextEditorProps) {
       filterSuggestionItems(
         combineByGroup(
           getDefaultReactSlashMenuItems(editor),
-          getMultiColumnSlashMenuItems(editor)
+          getMultiColumnSlashMenuItems(editor),
         ),
-        query
+        query,
       );
   }, [editor]);
 
-  return <BlockNoteView
-    theme={props.theme}
-    editable={!props.readOnly}
-    lang="zh"
-    editor={editor}
-    onChange={() => {
-      // Saves the document JSON to state.
-      setBlocks(editor.document as Block[]);
-    }}
-  >
-    <SuggestionMenuController
-      triggerCharacter={"/"}
-      getItems={getSlashMenuItems}
-    />
-  </BlockNoteView>;
+  return (
+    <BlockNoteView
+      theme={props.theme}
+      editable={!props.readOnly}
+      lang="zh"
+      editor={editor}
+      onChange={() => {
+        // Saves the document JSON to state.
+        setBlocks(editor.document as Block[]);
+      }}
+    >
+      <SuggestionMenuController
+        triggerCharacter="/"
+        getItems={getSlashMenuItems}
+      />
+    </BlockNoteView>
+  );
 }
-
-

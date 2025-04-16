@@ -1,15 +1,15 @@
 {
   "name": "block-note-vue-demo",
-  "private": true,
-  "version": "0.0.0",
   "type": "module",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
     "dev": "vite",
     "build:packages": "pnpm -r build",
-    "build": "tsc -b && build:packages &&  vite build",
+    "build": "pnpm run build:packages &&  vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "ghpage": "vite build:packages && vite build && gh-pages -d dist"
+    "ghpage": "pnpm build && gh-pages -d dist"
   },
   "dependencies": {
     "@arco-design/web-vue": "^2.57.0",
@@ -17,12 +17,13 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^4.12.0",
+    "@vitejs/plugin-vue": "^5.2.3",
+    "eslint": "^9.24.0",
     "gh-pages": "^6.3.0",
     "less": "^4.3.0",
+    "rich-text-editor": "workspace:*",
     "typescript": "~5.7.3",
     "typescript-eslint": "^8.30.1",
-    "vite": "^6.3.0",
-    "@vitejs/plugin-vue": "^5.2.3",
-    "rich-text-editor": "workspace:*"
+    "vite": "^6.3.0"
   }
 }

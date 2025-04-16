@@ -1,11 +1,9 @@
-
-
-import { Block } from "@blocknote/core";
-import { createElement, StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import { defineComponent, h, onMounted, type PropType, shallowRef, watch } from "vue";
-import { RichTextEditorWithContext, updateRichTextEditorContext } from "./wrapper";
-
+import type { Block } from '@blocknote/core';
+import type { PropType } from 'vue';
+import { createElement, StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { defineComponent, h, onMounted, shallowRef, watch } from 'vue';
+import { RichTextEditorWithContext, updateRichTextEditorContext } from './wrapper';
 
 const RichTextEditorVueComponent = defineComponent({
     name: 'RichTextEditor',
@@ -18,19 +16,18 @@ const RichTextEditorVueComponent = defineComponent({
         },
         readOnly: {
             type: Boolean,
-            default: false
+            default: false,
         },
         theme: {
             type: String as PropType<'light' | 'dark'>,
-            default: 'light'
+            default: 'light',
         },
         locale: {
             type: String as PropType<'zh' | 'en'>,
-            default: 'zh'
-        }
+            default: 'zh',
+        },
     },
     setup(props) {
-
         const wrapperRef = shallowRef<HTMLDivElement>();
         const innerProps = shallowRef({
             id: `rich-text-editor-${Date.now()}-${Math.random()}`,
@@ -40,32 +37,30 @@ const RichTextEditorVueComponent = defineComponent({
             locale: props.locale,
             onBlocksChange: (blocks: Block[]) => {
                 props.onBlocksChange?.(blocks);
-            }
+            },
         });
         watch(() => props.theme, () => {
             innerProps.value = {
                 ...innerProps.value,
-                theme: props.theme
+                theme: props.theme,
             };
             updateRichTextEditorContext(innerProps.value);
         });
         watch(() => props.locale, () => {
             innerProps.value = {
                 ...innerProps.value,
-                locale: props.locale
+                locale: props.locale,
             };
             updateRichTextEditorContext(innerProps.value);
         });
         watch(() => props.readOnly, () => {
             innerProps.value = {
                 ...innerProps.value,
-                readOnly: props.readOnly
+                readOnly: props.readOnly,
             };
             updateRichTextEditorContext(innerProps.value);
         });
         onMounted(() => {
-            console.log(`wrapperRef.value`, wrapperRef.value);
-
             const node = wrapperRef.value || document.querySelector(`[data-id="${innerProps.value.id}"]`);
             if (node) {
                 createRoot(node).render(
@@ -75,9 +70,9 @@ const RichTextEditorVueComponent = defineComponent({
         });
 
         return () => {
-            return h('div', { ref: wrapperRef, 'data-id': innerProps.value.id });
+            return h('div', { 'ref': wrapperRef, 'data-id': innerProps.value.id });
         };
-    }
+    },
 });
 
 export default RichTextEditorVueComponent;

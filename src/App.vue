@@ -1,3 +1,18 @@
+<script setup lang="ts">
+import type { Block } from 'rich-text-editor';
+import { Button, Space } from '@arco-design/web-vue';
+import RichTextEditor from 'rich-text-editor';
+import { shallowRef } from 'vue';
+import { initialContent } from './initialContent';
+import { useLocationQuery } from './useLocationQuery';
+import 'rich-text-editor/style.css';
+
+const blocks = shallowRef<Block[]>(initialContent as Block[]);
+const theme = useLocationQuery<'light' | 'drak'>('theme', 'light');
+const readOnly = useLocationQuery<'false' | 'true'>('readOnly', 'false');
+const locale = useLocationQuery<'zh' | 'en'>('locale', 'zh');
+</script>
+
 <template>
   <div class="wrapper">
     <div class="header">
@@ -7,7 +22,9 @@
         </span>
         <Button type="primary" @click="() => {
           theme = (theme == 'dark' ? 'light' : 'dark');
-        }">主题:{{ theme }}</Button>
+        }">
+          主题:{{ theme }}
+        </Button>
         <Button type="text" @click="readOnly = (readOnly === 'true' ? 'false' : 'true')">
           <template v-if="readOnly === 'true'">
             只读
@@ -25,11 +42,10 @@
     </div>
     <div class="content">
       <div class="left">
-        <RichTextEditor :theme='theme' :locale="locale" :readOnly="readOnly === 'true'" :initialBlocks="blocks"
-          @blocksChange="(v) => {
+        <RichTextEditor :theme="theme" :locale="locale" :read-only="readOnly === 'true'" :initial-blocks="blocks"
+          @blocks-change="(v) => {
             blocks = v;
-          }">
-        </RichTextEditor>
+          }" />
       </div>
       <div class="right">
         <div>Document JSON:</div>
@@ -39,25 +55,11 @@
           JSON.stringify(blocks, null, 2) }}</code>
       </pre>
         </div>
-
       </div>
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
-import { shallowRef } from 'vue';
-import RichTextEditor, { type Block } from 'rich-text-editor';
-import 'rich-text-editor/style.css';
-import { Button, Space } from '@arco-design/web-vue';
-import { initialContent } from './initialContent';
-import { useLocationQuery } from './useLocationQuery';
-
-const blocks = shallowRef<Block[]>(initialContent as Block[]);
-const theme = useLocationQuery<'light' | 'drak'>('theme', 'light');
-const readOnly = useLocationQuery<'false' | 'true'>('readOnly', 'false');
-const locale = useLocationQuery<'zh' | 'en'>('locale', 'zh');
-</script>
 <style>
 * {
   box-sizing: border-box;
@@ -68,6 +70,7 @@ body {
   padding: 0;
 }
 </style>
+
 <style scoped lang="less">
 .wrapper {
   height: 100vh;
@@ -92,8 +95,6 @@ body {
     min-height: 0;
   }
 }
-
-
 
 .left,
 .right {
