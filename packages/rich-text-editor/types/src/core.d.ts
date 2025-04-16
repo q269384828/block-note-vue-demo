@@ -1,7 +1,4 @@
 import { Block } from "@blocknote/core";
-import "@blocknote/core/fonts/inter.css";
-import "@blocknote/mantine/style.css";
-import './style.css';
 export type RichTextEditorProps = {
     id: string;
     initialBlocks?: Block[];

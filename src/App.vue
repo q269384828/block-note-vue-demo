@@ -48,6 +48,7 @@
 <script setup lang="ts">
 import { shallowRef } from 'vue';
 import RichTextEditor, { type Block } from 'rich-text-editor';
+import 'rich-text-editor/style.css';
 import { Button, Space } from '@arco-design/web-vue';
 import { initialContent } from './initialContent';
 import { useLocationQuery } from './useLocationQuery';

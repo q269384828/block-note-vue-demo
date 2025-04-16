@@ -1,7 +1,6 @@
 import { Block, BlockNoteSchema, combineByGroup, filterSuggestionItems } from "@blocknote/core";
-import "@blocknote/core/fonts/inter.css";
 import { BlockNoteView } from "@blocknote/mantine";
-import "@blocknote/mantine/style.css";
+
 import { getDefaultReactSlashMenuItems, SuggestionMenuController, useCreateBlockNote } from "@blocknote/react";
 import { useMemo } from "react";
 import * as locales from "@blocknote/core/locales";
@@ -13,7 +12,6 @@ import {
 } from "@blocknote/xl-multi-column";
 import { useControllableValue, useUnmount } from "ahooks";
 import { codeBlock } from "@blocknote/code-block";
-import './style.css';
 
 export type RichTextEditorProps = {
   id: string;

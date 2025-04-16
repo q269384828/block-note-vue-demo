@@ -64,6 +64,8 @@ const RichTextEditorVueComponent = defineComponent({
             updateRichTextEditorContext(innerProps.value);
         });
         onMounted(() => {
+            console.log(`wrapperRef.value`, wrapperRef.value);
+
             const node = wrapperRef.value || document.querySelector(`[data-id="${innerProps.value.id}"]`);
             if (node) {
                 createRoot(node).render(

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build:packages": "pnpm -r build",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && build:packages &&  vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "ghpage": "vite build:packages && vite build && gh-pages -d dist"

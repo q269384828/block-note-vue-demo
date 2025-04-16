@@ -22,7 +22,7 @@
       "import": "./dist/rich-text-editor.js"
     },
     "./style.css": {
-      "import": "./dist/style.css"
+      "import": "./src/style.css"
     }
   },
   "dependencies": {
