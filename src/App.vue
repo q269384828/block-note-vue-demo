@@ -9,7 +9,7 @@
           theme = (theme == 'dark' ? 'light' : 'dark');
         }">主题:{{ theme }}</Button>
         <Button type="text" @click="readOnly = (readOnly === 'true' ? 'false' : 'true')">
-          <template v-if="readOnly">
+          <template v-if="readOnly==='true'">
             只读
           </template>
           <template v-else>
