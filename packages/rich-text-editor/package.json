@@ -1,22 +1,11 @@
 {
   "name": "rich-text-editor",
-  "version": "1.0.0",
-  "description": "",
-  "private": true,
   "type": "module",
-  "scripts": {
-    "build": "tsc && vite build"
-  },
-  "files": [
-    "dist",
-    "types",
-    "src"
-  ],
-  "keywords": [],
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
   "author": "",
-  "source": "src/index.ts",
-  "types": "./types/src/index.d.ts",
-  "module": "./dist/rich-text-editor.js",
+  "keywords": [],
   "exports": {
     ".": {
       "types": "./types/src/index.d.ts",
@@ -25,6 +14,20 @@
     "./style.css": {
       "import": "./src/style.css"
     }
+  },
+  "module": "./dist/rich-text-editor.js",
+  "types": "./types/src/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "types"
+  ],
+  "scripts": {
+    "build": "tsc && vite build"
+  },
+  "source": "src/index.ts",
+  "peerDependencies": {
+    "vue": "^3.2"
   },
   "dependencies": {
     "@blocknote/code-block": "^0.28.0",
@@ -48,8 +51,5 @@
     "eslint": "^9.24.0",
     "typescript": "~5.7.3",
     "vite": "^6.3.0"
-  },
-  "peerDependencies": {
-    "vue": "^3.2"
   }
 }

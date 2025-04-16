@@ -1,27 +1,27 @@
 {
   "compilerOptions": {
+    "composite": true,
     "target": "ESNext",
-    "useDefineForClassFields": true,
-    "module": "ESNext",
+    "jsx": "react-jsx",
     "lib": [
       "ESNext",
       "DOM"
     ],
+    "useDefineForClassFields": true,
+    "module": "ESNext",
     "moduleResolution": "bundler",
-    "jsx": "react-jsx",
-    "strict": true,
-    "sourceMap": true,
     "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "noEmit": false,
+    "strict": true,
+    "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "outDir": "dist",
     "declaration": true,
     "declarationDir": "types",
     "emitDeclarationOnly": true,
-    "composite": true,
+    "noEmit": false,
+    "outDir": "dist",
+    "sourceMap": true,
+    "esModuleInterop": true,
     "skipLibCheck": true
   },
   "include": [
