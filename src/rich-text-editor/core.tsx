@@ -11,8 +11,9 @@ import {
   locales as multiColumnLocales,
   withMultiColumn,
 } from "@blocknote/xl-multi-column";
-import { useControllableValue } from "ahooks";
-
+import { useControllableValue, useUnmount } from "ahooks";
+import { codeBlock } from "@blocknote/code-block";
+import './style.css';
 
 export type RichTextEditorProps = {
   id: string;
@@ -36,6 +37,7 @@ export default function RichTextEditor(props: RichTextEditorProps) {
     ...locales[locale],
     multi_column: multiColumnLocales[locale]
   };
+
   // Creates a new editor instance.
   const editor = useCreateBlockNote({
     dropCursor: multiColumnDropCursor,
@@ -44,8 +46,16 @@ export default function RichTextEditor(props: RichTextEditorProps) {
     schema: withMultiColumn(BlockNoteSchema.create()),
     tables: {
       cellBackgroundColor: true
-    }
+    },
+    uploadFile: async (file: File) => {
+      return URL.createObjectURL(file)
+    },
+    codeBlock
   });
+
+  useUnmount(()=>{
+    setBlocks(editor.document as Block[]);
+  })
 
   // Gets the default slash menu items merged with the multi-column ones.
   const getSlashMenuItems = useMemo(() => {

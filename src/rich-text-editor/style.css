@@ -1,0 +1,12 @@
+.bn-block-column-list {
+    gap: 6px;
+}
+
+.bn-block-column-list>.bn-block-column {
+    background-color: rgba(100, 106, 115, 0.05);
+}
+
+.bn-block-column:first-child,
+.bn-block-column:last-child {
+    padding-inline: 12px !important;
+}

@@ -11,12 +11,16 @@
     "ghpage": "vite build && gh-pages -d dist"
   },
   "dependencies": {
+    "@arco-design/web-vue": "^2.57.0",
+    "@blocknote/code-block": "^0.28.0",
     "@blocknote/core": "^0.28.0",
     "@blocknote/mantine": "^0.28.0",
     "@blocknote/react": "^0.28.0",
     "@blocknote/xl-multi-column": "^0.28.0",
     "@vitejs/plugin-react": "^4.4.0",
     "@vitejs/plugin-vue": "^5.2.3",
+    "@vueuse/core": "^13.1.0",
+    "@vueuse/router": "^13.1.0",
     "ahooks": "^3.8.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -32,6 +36,7 @@
     "eslint-plugin-react-refresh": "^0.4.19",
     "gh-pages": "^6.3.0",
     "globals": "^15.15.0",
+    "less": "^4.3.0",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.24.1",
     "vite": "^6.2.0"
