@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Block } from 'rich-text-editor';
-import { Button, Space } from '@arco-design/web-vue';
+import { Button, Message, Space } from '@arco-design/web-vue';
 import RichTextEditor from 'rich-text-editor';
 import { shallowRef } from 'vue';
 import { initialContent } from './initialContent';
@@ -11,6 +11,27 @@ const blocks = shallowRef<Block[]>(initialContent as Block[]);
 const theme = useLocationQuery<'light' | 'drak'>('theme', 'light');
 const readOnly = useLocationQuery<'false' | 'true'>('readOnly', 'false');
 const locale = useLocationQuery<'zh' | 'en'>('locale', 'zh');
+
+const times = shallowRef(0);
+function onClick() {
+  // 从剪贴板获取数据并尝试解析为 JSON
+  navigator.clipboard.readText().then((text) => {
+    try {
+      const parsed = JSON.parse(text);
+      if (Array.isArray(parsed)) {
+        blocks.value = parsed;
+        times.value++;
+      }
+      else {
+        throw new TypeError('Parsed content is not an array');
+      }
+    }
+    catch (error) {
+      console.error('Failed to parse clipboard content as JSON', error);
+      Message.error(`Failed to parse clipboard content as JSON${error.message}`);
+    }
+  });
+}
 </script>
 
 <template>
@@ -20,9 +41,11 @@ const locale = useLocationQuery<'zh' | 'en'>('locale', 'zh');
         <span>
           BlockNote Editor
         </span>
-        <Button type="primary" @click="() => {
-          theme = (theme == 'dark' ? 'light' : 'dark');
-        }">
+        <Button
+          type="primary" @click="() => {
+            theme = (theme == 'dark' ? 'light' : 'dark');
+          }"
+        >
           主题:{{ theme }}
         </Button>
         <Button type="text" @click="readOnly = (readOnly === 'true' ? 'false' : 'true')">
@@ -33,27 +56,30 @@ const locale = useLocationQuery<'zh' | 'en'>('locale', 'zh');
             可编辑
           </template>
         </Button>
-        <Button @click="() => {
-          locale = (locale === 'zh' ? 'en' : 'zh');
-        }">
+        <Button
+          @click="() => {
+            locale = (locale === 'zh' ? 'en' : 'zh');
+          }"
+        >
           locale:{{ locale }}
+        </Button>
+        <Button @click="onClick">
+          导入
         </Button>
       </Space>
     </div>
     <div class="content">
       <div class="left">
-        <RichTextEditor :theme="theme" :locale="locale" :read-only="readOnly === 'true'" :initial-blocks="blocks"
-          @blocks-change="(v) => {
+        <RichTextEditor
+          :key="times" :theme="theme" :locale="locale" :read-only="readOnly === 'true'"
+          :initial-blocks="blocks" @blocks-change="(v) => {
             blocks = v;
-          }" />
+          }"
+        />
       </div>
       <div class="right">
-        <div>Document JSON:</div>
         <div class="inner bordered">
-          <pre>
-        <code>{{
-          JSON.stringify(blocks, null, 2) }}</code>
-      </pre>
+          <pre><code>{{ JSON.stringify(blocks, null, 2) }}</code></pre>
         </div>
       </div>
     </div>

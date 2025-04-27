@@ -1,0 +1,47 @@
+[
+  {
+    "id": "cc76a12d-6ab8-438b-a87c-d2b7c91e6abb",
+    "type": "paragraph",
+    "props": {
+      "textColor": "default",
+      "backgroundColor": "default",
+      "textAlignment": "left"
+    },
+    "content": [
+      {
+        "type": "text",
+        "text": "普通段落",
+        "styles": {}
+      }
+    ],
+    "children": []
+  },
+  {
+    "id": "fadca335-56b2-4980-81b3-8b60ee8a41df",
+    "type": "paragraph",
+    "props": {
+      "textColor": "default",
+      "backgroundColor": "default",
+      "textAlignment": "left"
+    },
+    "content": [
+      {
+        "type": "text",
+        "text": "普通段落带 ",
+        "styles": {}
+      },
+      {
+        "type": "link",
+        "href": "http://a/",
+        "content": [
+          {
+            "type": "text",
+            "text": "超链接",
+            "styles": {}
+          }
+        ]
+      }
+    ],
+    "children": []
+  }
+]
